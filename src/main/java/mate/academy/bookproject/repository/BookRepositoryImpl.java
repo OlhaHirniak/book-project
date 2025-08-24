@@ -1,6 +1,7 @@
 package mate.academy.bookproject.repository;
 
 import java.util.List;
+import mate.academy.bookproject.exception.DataProcessingException;
 import mate.academy.bookproject.model.Book;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BookDaoImpl implements BookRepository {
+public class BookRepositoryImpl implements BookRepository {
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public BookDaoImpl(SessionFactory sessionFactory) {
+    public BookRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -31,7 +32,7 @@ public class BookDaoImpl implements BookRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can't insert the book to the DB: " + book);
+            throw new DataProcessingException("Can't insert the book to the DB: " + book);
         } finally {
             if (session != null) {
                 session.close();
@@ -45,7 +46,7 @@ public class BookDaoImpl implements BookRepository {
             return session.createQuery(
                     "SELECT u FROM Book u", Book.class).getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get all the books from the DB: ", e);
+            throw new DataProcessingException("Can't get all the books from the DB: " + e);
         }
     }
 }

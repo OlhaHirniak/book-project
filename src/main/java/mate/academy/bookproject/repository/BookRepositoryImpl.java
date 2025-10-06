@@ -1,6 +1,7 @@
 package mate.academy.bookproject.repository;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.bookproject.exception.DataProcessingException;
 import mate.academy.bookproject.model.Book;
 import org.hibernate.Session;
@@ -37,6 +38,13 @@ public class BookRepositoryImpl implements BookRepository {
             if (session != null) {
                 session.close();
             }
+        }
+    }
+
+    @Override
+    public Optional<Book> findById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(session.get(Book.class, id));
         }
     }
 

@@ -1,11 +1,11 @@
 package mate.academy.bookproject.controller;
 
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookproject.dto.BookDto;
 import mate.academy.bookproject.dto.CreateBookRequestDto;
 import mate.academy.bookproject.service.BookService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -25,6 +25,7 @@ public class BookController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public BookDto createBook(@RequestBody CreateBookRequestDto bookDto) {
         return bookService.save(bookDto);
     }

@@ -8,19 +8,24 @@ import mate.academy.bookproject.exception.EntityNotFoundException;
 import mate.academy.bookproject.mapper.BookMapper;
 import mate.academy.bookproject.model.Book;
 import mate.academy.bookproject.repository.BookRepository;
+import org.antlr.v4.runtime.misc.LogManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
-    private final BookRepository bookRepository;
+
+    @Autowired
+    BookRepository bookRepository;
+
     private final BookMapper bookMapper;
 
     @Override
     public BookDto save(CreateBookRequestDto requestDto) {
         Book book = bookMapper.toModel(requestDto);
-        Book savedBook = bookRepository.save(book);
-        return bookMapper.bookDtoToBookDto(savedBook);
+        bookRepository.save(book);
+        return bookMapper.bookDtoToBookDto(book);
     }
 
     @Override

@@ -6,7 +6,13 @@ import mate.academy.bookproject.dto.BookDto;
 import mate.academy.bookproject.dto.CreateBookRequestDto;
 import mate.academy.bookproject.service.BookService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,7 +26,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public BookDto getBookById(@PathVariable Long id){
+    public BookDto getBookById(@PathVariable Long id) {
         return bookService.getBookById(id);
     }
 

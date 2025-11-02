@@ -37,4 +37,9 @@ public class BookServiceImpl implements BookService {
                 .map(bookMapper::bookDtoToBookDto)
                 .toList();
     }
+
+    @Override
+    public void deleteById(Long id) {
+        bookRepository.deleteById(id);
+    }
 }

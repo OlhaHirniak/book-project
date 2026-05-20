@@ -2,6 +2,7 @@ package mate.academy.bookproject.annotation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import java.util.Objects;
 import mate.academy.bookproject.dto.UserRegistrationRequestDto;
 
 public class FieldMatchValidator implements ConstraintValidator<FieldMatch,
@@ -18,6 +19,6 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch,
         if (dto == null) {
             return true;
         }
-        return dto.getPassword().equals(dto.getRepeatPassword());
+        return Objects.equals(dto.getPassword(), dto.getRepeatPassword());
     }
 }

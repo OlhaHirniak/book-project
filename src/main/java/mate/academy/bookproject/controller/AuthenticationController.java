@@ -49,6 +49,7 @@ public class AuthenticationController {
                     description = "User with the given email already exists"
             )
     })
+
     @PostMapping("/registration")
     public UserResponseDto registerUser(@RequestBody @Valid UserRegistrationRequestDto requestDto)
             throws RegistrationException {

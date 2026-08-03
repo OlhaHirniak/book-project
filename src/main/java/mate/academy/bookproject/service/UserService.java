@@ -7,6 +7,4 @@ import mate.academy.bookproject.exception.RegistrationException;
 public interface UserService {
     UserResponseDto register(UserRegistrationRequestDto userRegistrationRequestDto)
             throws RegistrationException;
-
-    UserResponseDto findByEmail(String email);
 }

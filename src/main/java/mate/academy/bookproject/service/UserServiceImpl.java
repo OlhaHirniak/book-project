@@ -4,6 +4,7 @@ import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookproject.dto.UserRegistrationRequestDto;
 import mate.academy.bookproject.dto.UserResponseDto;
+import mate.academy.bookproject.exception.EntityNotFoundException;
 import mate.academy.bookproject.exception.RegistrationException;
 import mate.academy.bookproject.mapper.UserMapper;
 import mate.academy.bookproject.model.Role;
@@ -31,16 +32,9 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.requestDtoToUser(userRegistrationRequestDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = roleRepository.findByRole(Role.RoleName.USER).orElseThrow(()
-                -> new RegistrationException("Role " + Role.RoleName.USER
+                -> new EntityNotFoundException("Role " + Role.RoleName.USER
                 + " not found"));
         user.setRoles(Set.of(role));
         return userMapper.userToUserDto(userRepository.save(user));
-    }
-
-    @Override
-    public UserResponseDto findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .map(userMapper::userToUserDto)
-                .orElseThrow(() -> new RuntimeException("Can't find user by email: " + email));
     }
 }

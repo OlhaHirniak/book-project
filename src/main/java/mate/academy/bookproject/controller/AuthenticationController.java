@@ -8,9 +8,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import mate.academy.bookproject.dto.UserLoginRequestDto;
+import mate.academy.bookproject.dto.UserLoginResponseDto;
 import mate.academy.bookproject.dto.UserRegistrationRequestDto;
 import mate.academy.bookproject.dto.UserResponseDto;
 import mate.academy.bookproject.exception.RegistrationException;
+import mate.academy.bookproject.security.AuthenticationService;
 import mate.academy.bookproject.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 )
 public class AuthenticationController {
     private final UserService userService;
+    private final AuthenticationService authenticationService;
 
     @Operation(
             summary = "Register a new user",
@@ -54,5 +58,33 @@ public class AuthenticationController {
     public UserResponseDto registerUser(@RequestBody @Valid UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         return userService.register(requestDto);
+    }
+
+    @Operation(
+            summary = "Authenticate user",
+            description = "Authenticates a user and returns a JWT token."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "User authenticated successfully",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = UserLoginResponseDto.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid login data"
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Invalid email or password"
+            )
+    })
+
+    @PostMapping("/login")
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto request) {
+        return authenticationService.authenticate(request);
     }
 }

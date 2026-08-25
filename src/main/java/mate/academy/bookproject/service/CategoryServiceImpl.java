@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookproject.dto.BookDtoWithoutCategoryIds;
 import mate.academy.bookproject.dto.CategoryDto;
+import mate.academy.bookproject.dto.CreateCategoryDto;
 import mate.academy.bookproject.exception.EntityNotFoundException;
 import mate.academy.bookproject.mapper.BookMapper;
 import mate.academy.bookproject.mapper.CategoryMapper;
@@ -38,19 +39,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto save(CategoryDto categoryDto) {
+    public CategoryDto save(CreateCategoryDto categoryDto) {
         Category category = categoryMapper.toEntity(categoryDto);
         Category savedCategory = categoryRepository.save(category);
         return categoryMapper.toDto(savedCategory);
     }
 
     @Override
-    public CategoryDto update(Long id, CategoryDto categoryDto) {
+    public CategoryDto update(Long id, CreateCategoryDto categoryDto) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Can't find category with id:" + id));
-        category.setName(categoryDto.getName());
-        category.setDescription(categoryDto.getDescription());
+        categoryMapper.updateCategoryFromDto(categoryDto, category);
         Category updatedCategory = categoryRepository.save(category);
         return categoryMapper.toDto(updatedCategory);
     }

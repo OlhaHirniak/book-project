@@ -21,3 +21,5 @@ databaseChangeLog:
       file: db/changelog/changes/010-add-book-category-table.yaml
   - include:
       file: db/changelog/changes/011-insert-categories.yaml
+  - include:
+      file: db/changelog/changes/012-rename-book-category-table.yaml

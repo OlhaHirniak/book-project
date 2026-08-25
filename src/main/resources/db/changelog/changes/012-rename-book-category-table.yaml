@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 11-rename-book-category-table
+      author: olha-hirniak
+      changes:
+        - renameTable:
+            oldTableName: book_category
+            newTableName: books_categories

@@ -12,6 +12,7 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
+
     BookDto toDto(Book book);
 
     @Mapping(target = "categories", ignore = true)

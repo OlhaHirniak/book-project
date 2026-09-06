@@ -43,12 +43,4 @@ public class UserServiceImpl implements UserService {
         shoppingCartService.addShoppingCartForNewUser(savedUser);
         return userMapper.userToUserDto(savedUser);
     }
-
-    @Override
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Can't find user by email: " + email
-                ));
-    }
 }

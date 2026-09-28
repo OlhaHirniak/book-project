@@ -25,3 +25,5 @@ databaseChangeLog:
       file: db/changelog/changes/012-rename-book-category-table.yaml
   - include:
       file: db/changelog/changes/013-add-shopping-cart-tables.yaml
+  - include:
+      file: db/changelog/changes/014-add-order-table.yaml

@@ -2,6 +2,7 @@ package mate.academy.bookproject.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookproject.dto.OrderItemsResponseDto;
@@ -33,7 +34,7 @@ public class OrderController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create an order", description = "Create a new order")
-    public OrderResponseDto createOrder(@RequestBody OrderRequestDto orderRequestDto,
+    public OrderResponseDto createOrder(@RequestBody @Valid OrderRequestDto orderRequestDto,
                                         @AuthenticationPrincipal User user) {
         return orderService.createOrder(orderRequestDto, user);
     }
@@ -48,7 +49,7 @@ public class OrderController {
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PatchMapping("/{id}")
     @Operation(summary = "Update order status", description = "Update order status by user")
-    public OrderResponseDto updateStatus(@RequestBody UpdateOrderStatusRequestDto
+    public OrderResponseDto updateStatus(@RequestBody @Valid UpdateOrderStatusRequestDto
                                          updateOrderStatusRequestDto,
                                          @PathVariable Long id,
                                          @AuthenticationPrincipal User user) {

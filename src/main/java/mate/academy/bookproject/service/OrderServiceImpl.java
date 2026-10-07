@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderItems(orderItems);
         order.setTotal(calculateTotalPrice(order));
         orderRepository.save(order);
-        shoppingCart.clearShoppingCart(shoppingCart);
+        shoppingCart.clearShoppingCart();
         return orderMapper.toDto(order);
     }
 

@@ -43,9 +43,7 @@ public class ShoppingCart {
     @Column(nullable = false)
     private boolean isDeleted = false;
 
-    public void clearShoppingCart(ShoppingCart shoppingCart) {
-        shoppingCart.getCartItems()
-                .forEach(item -> item.setShoppingCart(null));
-        shoppingCart.getCartItems().clear();
+    public void clearShoppingCart() {
+        cartItems.clear();
     }
 }
